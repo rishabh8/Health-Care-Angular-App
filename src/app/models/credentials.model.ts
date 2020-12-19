@@ -1,10 +1,10 @@
 export class Credentials {
-    userId: number;
-    username: string;
-    password: string;
-    isLoggedIn: boolean;
+  userId: number;
+  username: string;
+  password: string;
+  isLoggedIn: boolean;
 
-    constructor(values: Object = {}) {
-        Object.assign(this, values);
-    }
+  constructor(values: object = {}) {
+    Object.assign(this, values);
+  }
 }

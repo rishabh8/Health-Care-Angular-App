@@ -14,7 +14,7 @@ export class ProfileComponent implements OnInit {
 
   editProfile = false;
   userId = -1;
-  userDetails = new Users;
+  userDetails = new Users();
 
   editProfileForm: FormGroup;
   userImg = './../../assets/user.jpg';
@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit {
     // username should be disabled. it should not be edited
 
     this.editProfileForm = new FormGroup({
-      userName: new FormControl({ value: ''}),
+      userName: new FormControl({ value: '' }),
       mobile: new FormControl(''),
       email: new FormControl(''),
       location: new FormControl('')
@@ -65,5 +65,5 @@ export class ProfileComponent implements OnInit {
     // retrieve user details from service using userId
 
   }
-  
+
 }

@@ -4,15 +4,15 @@
   <div class="home-content-wrapper">
     <div class="home-profile-wrapper">
       <div class="profile-details">
-        <img [src]="userImg" width="120" height="100" class="profile-img">
+        <img alt="image1" [src]="userImg" width="120" height="100" class="profile-img">
       </div>
     </div>
     <div class="home-profile-wrapper border">
       <!-- hide profile details if editing the form-->
       <ul id="profileDetails" class="profile-details">
-        <li class="list-items" >
+        <li class="list-items">
           Name:
-          <span id="usernameVal"  >
+          <span id="usernameVal">
             {{userDetails?.username}}
           </span>
 
@@ -25,7 +25,7 @@
         </li>
         <li class="list-items">
           Email:
-          <span id="emailVal" class="list-items" >
+          <span id="emailVal" class="list-items">
             {{userDetails?.email}}
           </span>
         </li>
@@ -85,7 +85,7 @@
         <!-- show button if not editing the form-->
         <!-- call editMyProfile method when clicking on this button-->
         <button id="editProfileBtn" class="prompt-btn btn">
-        Edit profile</button>
+          Edit profile</button>
 
         <!-- show button if editing the form-->
         <!-- call discardEdit method when clicking on this button-->

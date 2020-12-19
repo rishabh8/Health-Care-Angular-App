@@ -23,7 +23,7 @@ export class DataService {
 
     // return true if user authenticated
 
-    // return false if user not authenticated 
+    // return false if user not authenticated
 
     return;
   }
@@ -56,7 +56,7 @@ export class DataService {
 
     // should return response retrieved from ApiService
 
-    // handle error 
+    // handle error
 
     return;
 
@@ -67,7 +67,7 @@ export class DataService {
 
     // should return all patients list retrieved from ApiService
 
-    // handle error 
+    // handle error
 
     return;
 
@@ -77,16 +77,16 @@ export class DataService {
 
     // should return particular patient details retrieved from ApiService
 
-    // handle error 
+    // handle error
 
     return;
   }
-  
+
   getDiseasesList(): Observable<any> {
 
     // should return response retrieved from ApiService
 
-    // handle error 
+    // handle error
 
     return;
   }
@@ -95,7 +95,7 @@ export class DataService {
 
     // should return response retrieved from ApiService
 
-    // handle error 
+    // handle error
 
     return;
   }
@@ -104,7 +104,7 @@ export class DataService {
 
     // should return response retrieved from ApiService
 
-    // handle error 
+    // handle error
 
     return;
   }
@@ -113,7 +113,7 @@ export class DataService {
 
     // should return response retrieved from ApiService
 
-    // handle error 
+    // handle error
 
     return;
   }
@@ -122,7 +122,7 @@ export class DataService {
 
     // should return response retrieved from ApiService
 
-    // handle error 
+    // handle error
 
     return;
   }

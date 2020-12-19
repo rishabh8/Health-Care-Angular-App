@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
-import { FormGroup, FormBuilder,Validators } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { Appointment } from '../../models/appointment';
@@ -19,25 +19,26 @@ export class ViewPatientComponent implements OnInit {
   patient;
   names;
   today;
-  isBookAppointment: boolean = true;
-  isFormEnabled: boolean = false;
-  isScheduledAppointment: boolean = true;
-  isTableEnabled: boolean = false;
+  isBookAppointment = true;
+  isFormEnabled = false;
+  isScheduledAppointment = true;
+  isTableEnabled = false;
   appointmentForm: FormGroup;
-  appointmentDetails = new Appointment;
+  appointmentDetails = new Appointment();
   bookedAppointmentResponse;
   ScheduledAppointmentResponse;
 
-  constructor(fb: FormBuilder,private route: Router, private datePipe: DatePipe, private activatedRoute: ActivatedRoute, private dataService: DataService) {
+  constructor(fb: FormBuilder, private route: Router, private datePipe: DatePipe,
+    private activatedRoute: ActivatedRoute, private dataService: DataService) {
     this.today = this.datePipe.transform(Date.now(), 'yyyy-MM-dd');
     // add necessary validators
     this.appointmentForm = fb.group({
-      'selectDisease' : [null],
-      'tentativeDate' : [null],
-      'priority' : [null]
-    })
+      selectDisease: [null],
+      tentativeDate: [null],
+      priority: [null]
+    });
 
-   }
+  }
 
   ngOnInit() {
 
@@ -58,14 +59,14 @@ export class ViewPatientComponent implements OnInit {
     // patientId, patientFirstName, patientLastName, disease, priority, tentativedate, registeredTime
 
     // if booked successfully should redirect to 'requested_appointments' page
-    
+
   }
 
   scheduledAppointment() {
 
     // change isBookAppointment, isScheduledAppointment, isFormEnabled, isTableEnabled property values appropriately
 
-    // get particular patient appointments using getAppointments method of DataService 
+    // get particular patient appointments using getAppointments method of DataService
 
   }
 
@@ -76,6 +77,6 @@ export class ViewPatientComponent implements OnInit {
     // After deleting the appointment, get particular patient appointments
 
   }
-  
+
 }
 

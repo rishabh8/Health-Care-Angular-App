@@ -12,7 +12,7 @@ import { catchError, retry } from 'rxjs/operators';
 @Injectable()
 export class ApiService {
 
-  API_URL: String;
+  API_URL: string;
   AUTH_API_URL = '/auth/server/';
 
   constructor(private http: HttpClient) {
@@ -22,7 +22,7 @@ export class ApiService {
   public checkLogin(username: string, password: string): Observable<Credentials> {
     // should return response from server
 
-    // handle error 
+    // handle error
 
     return;
   }
@@ -30,7 +30,7 @@ export class ApiService {
   public getUserDetails(userId: number): Observable<Users> {
     // should return user details retireved from server
 
-    // handle error 
+    // handle error
 
     return;
   }
@@ -38,7 +38,7 @@ export class ApiService {
   public updateDetails(userDetails: Users): Observable<Users> {
     // should return user details if successfully updated the details
 
-    // handle error 
+    // handle error
 
     return;
   }
@@ -47,7 +47,7 @@ export class ApiService {
 
     // should return response from server if patientDetails added successfully
 
-    // handle error 
+    // handle error
 
     return;
   }
@@ -56,7 +56,7 @@ export class ApiService {
 
     // should return all patients from server
 
-    // handle error 
+    // handle error
 
     return;
   }
@@ -65,7 +65,7 @@ export class ApiService {
 
     // should return particular patient details from server
 
-    // handle error 
+    // handle error
 
     return;
   }
@@ -74,7 +74,7 @@ export class ApiService {
 
     // should return diseases from server
 
-    // handle error 
+    // handle error
 
     return;
   }
@@ -83,7 +83,7 @@ export class ApiService {
 
     // should return response from server if appointment booked successfully
 
-    // handle error 
+    // handle error
 
     return;
   }
@@ -92,7 +92,7 @@ export class ApiService {
 
     // should return all requested appointments from server
 
-    // handle error 
+    // handle error
 
     return;
   }
@@ -101,7 +101,7 @@ export class ApiService {
 
     // should return appointments of particular patient from server
 
-    // handle error 
+    // handle error
 
     return;
   }
@@ -118,5 +118,5 @@ export class ApiService {
   private handleError(error: HttpErrorResponse) {
     // handle error
   }
-  
+
 }
