@@ -6,14 +6,14 @@
       <h2>LOGIN</h2>
     </div>
     <div class="login-form-wrapper">
-      <form class="ro-form">
+      <form class="ro-form" name="loginForm">
         <div class="form-group">
           <label class="labelHead" for="username">
             <strong>Username</strong>
           </label>
           <input type="text" id="username" placeholder="username">
 
-          <div class="form-error-messages" id="error-no-username">
+          <div class="form-error-messages" id="error-no-username" *ngIf="">
             {{emptyUserName}}
           </div>
           <div class="form-error-messages" id="error-minlength-username">

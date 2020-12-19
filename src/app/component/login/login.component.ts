@@ -34,8 +34,8 @@ export class LoginComponent implements OnInit {
     // add necessary validators
 
     this.loginForm = new FormGroup({
-      userName: new FormControl(''),
-      password: new FormControl('')
+      userName: new FormControl('', [Validators.required, Validators.minLength(3)]),
+      password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('[0-9][a-z][A-Z]!@#$%^&*?')])
     });
   }
 
