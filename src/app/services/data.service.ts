@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
+import { BehaviorSubject, observable, Observable, of, throwError } from 'rxjs';
 import { Credentials } from '../models/credentials.model';
 import { Users } from '../models/users.model';
 import { Patient } from '../models/patient';
@@ -24,8 +24,13 @@ export class DataService {
     // return true if user authenticated
 
     // return false if user not authenticated
-
-    return;
+    this.api.checkLogin(username, password).subscribe(response => {
+      if (response !== null && response !== undefined) {
+        localStorage.setItem('userId', response.userId.toString());
+        this.isLogIn.next(response.userId > 0 ? true : false);
+      }
+    });
+    return this.isLogIn;
   }
 
   getAuthStatus(): Observable<boolean> {
@@ -130,8 +135,7 @@ export class DataService {
   getUserId(): number {
 
     // retrieve 'userId' from localstorage
-
-    return;
+    return parseInt(localStorage.getItem('userId'), 10);
   }
 
 

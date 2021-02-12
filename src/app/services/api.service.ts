@@ -1,19 +1,21 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 
 import { Credentials } from '../models/credentials.model';
 import { Users } from '../models/users.model';
 import { Patient } from '../models/patient';
 import { Appointment } from '../models/appointment';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { catchError, retry } from 'rxjs/operators';
+
 
 @Injectable()
 export class ApiService {
 
   API_URL: string;
   AUTH_API_URL = '/auth/server/';
+  // BASEURL: string = 'http://localhost:8001/';
 
   constructor(private http: HttpClient) {
     this.API_URL = 'api';
@@ -21,10 +23,13 @@ export class ApiService {
 
   public checkLogin(username: string, password: string): Observable<Credentials> {
     // should return response from server
-
     // handle error
-
-    return;
+    const payload = {
+      username,
+      password
+    };
+    return this.http.post<Credentials>(this.API_URL + this.AUTH_API_URL , payload)
+      .pipe(map(data => data), catchError(this.handleError));
   }
 
   public getUserDetails(userId: number): Observable<Users> {
@@ -117,6 +122,7 @@ export class ApiService {
 
   private handleError(error: HttpErrorResponse) {
     // handle error
+    return throwError(error);
   }
 
 }

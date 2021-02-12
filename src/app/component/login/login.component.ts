@@ -34,8 +34,9 @@ export class LoginComponent implements OnInit {
     // add necessary validators
 
     this.loginForm = new FormGroup({
-      userName: new FormControl('', [Validators.required, Validators.minLength(3)]),
-      password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('[0-9][a-z][A-Z]!@#$%^&*?')])
+      userName: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(20)])),
+      password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8),
+      Validators.maxLength(20), Validators.pattern('^[a-zA-Z0-9!$%@#£€*?&]*$')]))
     });
   }
 
@@ -45,7 +46,18 @@ export class LoginComponent implements OnInit {
     // if success, redirect to profile page
     // else display appropriate error message
     // reset the form
-
+    if (this.loginForm.valid) {
+      const username = this.loginForm.value.userName;
+      const password = this.loginForm.value.password;
+      this.dataService.authenticateUser(username, password).subscribe(response => {
+        alert(response);
+        if (response) {
+          this.route.navigate(['profile']);
+        } else {
+          alert('Incorrect username or password');
+        }
+      });
+    }
   }
 
 }
