@@ -6,15 +6,16 @@ import { Credentials } from '../models/credentials.model';
 import { Users } from '../models/users.model';
 import { Patient } from '../models/patient';
 import { Appointment } from '../models/appointment';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { catchError, retry } from 'rxjs/operators';
 
 
 @Injectable()
 export class ApiService {
 
-  API_URL: string;
-  AUTH_API_URL = '/auth/server/';
+  private API_URL: string;
+  private AUTH_API_URL = '/auth/server/';
+  private USER_DETAIL = '/users/';
   // BASEURL: string = 'http://localhost:8001/';
 
   constructor(private http: HttpClient) {
@@ -28,24 +29,25 @@ export class ApiService {
       username,
       password
     };
-    return this.http.post<Credentials>(this.API_URL + this.AUTH_API_URL , payload)
-      .pipe(map(data => data), catchError(this.handleError));
+    return this.http.post<Credentials>(this.API_URL + this.AUTH_API_URL, (payload))
+      .pipe(catchError(this.handleError));
   }
 
   public getUserDetails(userId: number): Observable<Users> {
     // should return user details retireved from server
-
     // handle error
-
-    return;
+    return this.http.get<Users>(this.API_URL + this.USER_DETAIL + userId.toString())
+      .pipe(catchError(this.handleError));
   }
 
   public updateDetails(userDetails: Users): Observable<Users> {
     // should return user details if successfully updated the details
 
     // handle error
-
-    return;
+    if (userDetails) {
+      return this.http.put<Users>(this.API_URL + this.USER_DETAIL + userDetails.userId, (userDetails))
+        .pipe(catchError(this.handleError));
+    }
   }
 
   public registerPatient(patientDetails: any): Observable<any> {

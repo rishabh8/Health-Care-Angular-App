@@ -1,6 +1,6 @@
 
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 
 import { DataService } from './data.service';
 
@@ -9,10 +9,11 @@ export class AuthGuardService implements CanActivate {
 
   constructor(public dataService: DataService, public router: Router) { }
 
-  canActivate(): boolean {
+  canActivate(route, state: RouterStateSnapshot): boolean {
     // return true if authenticated else redirect to login page
-
-    return;
+    if (this.dataService.getAuthStatus()) { return true; }
+    this.router.navigate(['login'], { queryParams: { returnUrl: state.url } });
+    return false;
   }
 
 }

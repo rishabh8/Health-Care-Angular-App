@@ -1,6 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { DataService } from '../../services/data.service';
 // import * as alertify from 'alertify.js';
@@ -27,12 +27,12 @@ export class LoginComponent implements OnInit {
   passwordPattern = 'Pattern does not match';
   wrongCredentials = 'Incorrect Username or Password';
 
-  constructor(private route: Router, private dataService: DataService) {
+  constructor(private route: Router, private router: ActivatedRoute, private dataService: DataService) {
   }
 
   ngOnInit() {
     // add necessary validators
-
+    this.isLoggedIn = true;
     this.loginForm = new FormGroup({
       userName: new FormControl('', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(20)])),
       password: new FormControl('', Validators.compose([Validators.required, Validators.minLength(8),
@@ -50,11 +50,14 @@ export class LoginComponent implements OnInit {
       const username = this.loginForm.value.userName;
       const password = this.loginForm.value.password;
       this.dataService.authenticateUser(username, password).subscribe(response => {
-        alert(response);
+        // alert(response);
         if (response) {
           this.route.navigate(['profile']);
+          this.isLoggedIn = true;
         } else {
-          alert('Incorrect username or password');
+          // alert('Incorrect username or password');
+          this.isLoggedIn = false;
+          this.loginForm.reset();
         }
       });
     }

@@ -6,15 +6,17 @@ import { Users } from '../models/users.model';
 import { Patient } from '../models/patient';
 import { Appointment } from '../models/appointment';
 import { ApiService } from './api.service';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable()
 export class DataService {
 
   isLoggedIn = false;
-  isLogIn: BehaviorSubject<boolean>;
+  private isLogIn: BehaviorSubject<boolean>;
+  private updateStatus: BehaviorSubject<boolean>;
   constructor(private api: ApiService) {
     this.isLogIn = new BehaviorSubject<boolean>(false);
+    this.updateStatus = new BehaviorSubject<boolean>(false);
   }
 
   authenticateUser(username: string, password: string): Observable<boolean> {
@@ -27,6 +29,7 @@ export class DataService {
     this.api.checkLogin(username, password).subscribe(response => {
       if (response !== null && response !== undefined) {
         localStorage.setItem('userId', response.userId.toString());
+        this.isLoggedIn = true;
         this.isLogIn.next(response.userId > 0 ? true : false);
       }
     });
@@ -34,26 +37,33 @@ export class DataService {
   }
 
   getAuthStatus(): Observable<boolean> {
-    // return this.isLogIn.asObservable();
-    return;
+    return this.isLogIn.asObservable();
   }
   doLogOut() {
     // remove the key 'userId' if exists
-
+    this.isLoggedIn = false;
+    localStorage.removeItem('userId');
   }
 
   getUserDetails(userId: number): Observable<Users> {
 
     // should return user details retrieved from api service
-
-    return;
+    return this.api.getUserDetails(userId).pipe(map(res => res));
   }
 
   updateProfile(userDetails): Observable<boolean> {
 
     // should return the updated status according to the response from api service
-
-    return;
+    if (userDetails) {
+      this.api.updateDetails(userDetails).subscribe(data => {
+        if (data) {
+          this.updateStatus.next(true);
+        } else {
+          this.updateStatus.next(false);
+        }
+      });
+    }
+    return this.updateStatus;
   }
 
   registerPatient(patientDetails): Observable<any> {

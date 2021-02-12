@@ -52,6 +52,9 @@
             {{passwordPattern}}
           </div>
         </div>
+        <div class="form-group" id="error-login" *ngIf="!isLoggedIn">
+          {{wrongCredentials}}
+        </div>
         <div class="col-sm-12 clmn12">
           <!-- disable button if form not valid -->
           <!-- call doLogin method when clicking on this button-->
