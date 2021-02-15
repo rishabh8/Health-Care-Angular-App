@@ -1,4 +1,5 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ApiService } from '../../services/api.service';
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit {
   passwordPattern = 'Pattern does not match';
   wrongCredentials = 'Incorrect Username or Password';
 
+
   constructor(private route: Router, private router: ActivatedRoute, private dataService: DataService) {
   }
 
@@ -49,13 +51,11 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const username = this.loginForm.value.userName;
       const password = this.loginForm.value.password;
-      this.dataService.authenticateUser(username, password).subscribe(response => {
-        // alert(response);
-        if (response) {
+      return this.dataService.authenticateUser(username, password).subscribe(response => {
+        if (response != null && response !== undefined) {
           this.route.navigate(['profile']);
           this.isLoggedIn = true;
         } else {
-          // alert('Incorrect username or password');
           this.isLoggedIn = false;
           this.loginForm.reset();
         }

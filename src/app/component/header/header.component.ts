@@ -1,9 +1,9 @@
 import { Component, OnInit, DoCheck, Inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from '../../services/api.service';
-import {DataService } from '../../services/data.service';
+import { DataService } from '../../services/data.service';
 import { Users } from '../../models/users.model';
-import {ActivatedRoute} from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -13,10 +13,9 @@ import {ActivatedRoute} from '@angular/router';
 export class HeaderComponent implements OnInit {
 
   userId = -1;
-  userDetails = new Users;
+  userDetails = new Users();
 
-  constructor(private dataService: DataService) { 
-
+  constructor(private dataService: DataService) {
   }
 
   ngOnInit() {
@@ -24,13 +23,25 @@ export class HeaderComponent implements OnInit {
     // get userId from service and assign it to userId property
 
     // call getProfileDetails method to get user details
+    if (this.dataService.isLogIn) {
+      this.userId = this.dataService.getUserId();
+      this.getProfileDetails();
+    }
 
   }
 
   getProfileDetails() {
 
-  // call getUserDetails method of dataService and assign response to userDetails property
-    
+    // call getUserDetails method of dataService and assign response to userDetails property
+    this.dataService.getUserDetails(this.userId).subscribe(data => {
+      if (data != null && data !== undefined) {
+        this.userDetails = data;
+      }
+    });
+  }
+
+  logout() {
+    this.dataService.doLogOut();
   }
 
 

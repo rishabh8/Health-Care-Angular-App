@@ -3,7 +3,7 @@ import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 import { HeaderComponent } from './header.component';
 import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
-import {Observable, of} from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 import { Users } from '../../models/users.model';
 import { DataService } from '../../services/data.service';
@@ -34,37 +34,37 @@ describe('HeaderComponent', () => {
     },
     "booksByAuthor": {
     },
-    "checkedoutDetails":[],
-    "globalCart":[],
-    "loggedUser": { "id": 1,"username": "user1" },
+    "checkedoutDetails": [],
+    "globalCart": [],
+    "loggedUser": { "id": 1, "username": "user1" },
     "users": [
-      {"id":1,"username":'user1',"password":'Password1!',"books":[]},
-      {"id":2,"username":'user2',"password":'Password2@',"books":[]},
-      {"id":3,"username":'user3',"password":'Password3#',"books":[]},
-      {"id":4,"username":'user4',"password":'Password4$',"books":[]},
-      {"id":5,"username":'user5',"password":'Password5%',"books":[]}
+      { "id": 1, "username": 'user1', "password": 'Password1!', "books": [] },
+      { "id": 2, "username": 'user2', "password": 'Password2@', "books": [] },
+      { "id": 3, "username": 'user3', "password": 'Password3#', "books": [] },
+      { "id": 4, "username": 'user4', "password": 'Password4$', "books": [] },
+      { "id": 5, "username": 'user5', "password": 'Password5%', "books": [] }
     ]
   };
 
   beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [
-            RouterTestingModule,
-            ],
-            declarations: [HeaderComponent],
-			      providers: [
-			        { provide: DataService, useClass: MockDataService }
-			      ],
-            schemas: [ CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
+    TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule,
+      ],
+      declarations: [HeaderComponent],
+      providers: [
+        { provide: DataService, useClass: MockDataService }
+      ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
-            fixture = TestBed.createComponent(HeaderComponent);
-            component = fixture.debugElement.componentInstance;
-            dataService = TestBed.get(DataService);
-            location = TestBed.get(Location);
+    fixture = TestBed.createComponent(HeaderComponent);
+    component = fixture.debugElement.componentInstance;
+    dataService = TestBed.get(DataService);
+    location = TestBed.get(Location);
   });
 
   it('should create', () => {
@@ -80,7 +80,7 @@ describe('HeaderComponent', () => {
     tick();
     fixture.detectChanges();
     fixture.whenStable().then(() => {
-    	expect(dataService.getUserId).toHaveBeenCalled();
+      expect(dataService.getUserId).toHaveBeenCalled();
     });
   }));
 
@@ -94,7 +94,7 @@ describe('HeaderComponent', () => {
     tick();
     fixture.detectChanges();
     fixture.whenStable().then(() => {
-    	expect(component.getProfileDetails).toHaveBeenCalled();
+      expect(component.getProfileDetails).toHaveBeenCalled();
     });
   }));
 
@@ -107,7 +107,7 @@ describe('HeaderComponent', () => {
     tick();
     fixture.detectChanges();
     fixture.whenStable().then(() => {
-    	expect(dataService.getUserDetails).toHaveBeenCalledWith(1);
+      expect(dataService.getUserDetails).toHaveBeenCalledWith(1);
     });
   }));
 

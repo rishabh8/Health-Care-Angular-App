@@ -3,7 +3,7 @@
     <div class="navbar-header">
       <a class="navbar-brand">Health Care</a>
       <label class="navbar-brand">
-        <span class="glyphicon glyphicon-user"></span> Welcome 
+        <span class="glyphicon glyphicon-user"></span> Welcome
         <span id="username" class="user">{{userDetails.username}}</span>
       </label>
     </div>
@@ -31,7 +31,7 @@
         </li>
 	      <li>
           <a routerLink="/login">
-            <span class="glyphicon glyphicon-log-out" routerLinkActive="current-link"></span> Logout
+            <span class="glyphicon glyphicon-log-out" routerLinkActive="current-link" (click)="logout()"></span> Logout
           </a>
         </li>
 	    </ul>

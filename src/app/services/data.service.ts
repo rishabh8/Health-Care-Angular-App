@@ -12,8 +12,8 @@ import { map, tap } from 'rxjs/operators';
 export class DataService {
 
   isLoggedIn = false;
-  private isLogIn: BehaviorSubject<boolean>;
-  private updateStatus: BehaviorSubject<boolean>;
+  isLogIn: BehaviorSubject<boolean>;
+  updateStatus: BehaviorSubject<boolean>;
   constructor(private api: ApiService) {
     this.isLogIn = new BehaviorSubject<boolean>(false);
     this.updateStatus = new BehaviorSubject<boolean>(false);
@@ -27,10 +27,12 @@ export class DataService {
 
     // return false if user not authenticated
     this.api.checkLogin(username, password).subscribe(response => {
-      if (response !== null && response !== undefined) {
+      if (response.userId !== null && response.userId !== undefined) {
         localStorage.setItem('userId', response.userId.toString());
         this.isLoggedIn = true;
         this.isLogIn.next(response.userId > 0 ? true : false);
+      } else {
+        localStorage.removeItem('userId');
       }
     });
     return this.isLogIn;
@@ -42,7 +44,10 @@ export class DataService {
   doLogOut() {
     // remove the key 'userId' if exists
     this.isLoggedIn = false;
-    localStorage.removeItem('userId');
+    this.isLogIn.next(false);
+    if (this.getUserId() > 0) {
+      localStorage.removeItem('userId');
+    }
   }
 
   getUserDetails(userId: number): Observable<Users> {

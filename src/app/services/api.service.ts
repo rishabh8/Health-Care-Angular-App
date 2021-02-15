@@ -8,6 +8,7 @@ import { Patient } from '../models/patient';
 import { Appointment } from '../models/appointment';
 import { map } from 'rxjs/operators';
 import { catchError, retry } from 'rxjs/operators';
+import { unsupported } from '@angular/compiler/src/render3/view/util';
 
 
 @Injectable()
@@ -16,7 +17,6 @@ export class ApiService {
   private API_URL: string;
   private AUTH_API_URL = '/auth/server/';
   private USER_DETAIL = '/users/';
-  // BASEURL: string = 'http://localhost:8001/';
 
   constructor(private http: HttpClient) {
     this.API_URL = 'api';
@@ -25,19 +25,19 @@ export class ApiService {
   public checkLogin(username: string, password: string): Observable<Credentials> {
     // should return response from server
     // handle error
-    const payload = {
-      username,
-      password
-    };
-    return this.http.post<Credentials>(this.API_URL + this.AUTH_API_URL, (payload))
-      .pipe(catchError(this.handleError));
+    return this.http.post<Credentials>(this.API_URL + this.AUTH_API_URL, {username, password})
+      .pipe(map(this.checkResponse), catchError(this.handleError));
+  }
+
+  public checkResponse(res: any) {
+    return res != null && res !== undefined ? res : {};
   }
 
   public getUserDetails(userId: number): Observable<Users> {
     // should return user details retireved from server
     // handle error
     return this.http.get<Users>(this.API_URL + this.USER_DETAIL + userId.toString())
-      .pipe(catchError(this.handleError));
+      .pipe(map(this.checkResponse), catchError(this.handleError));
   }
 
   public updateDetails(userDetails: Users): Observable<Users> {
@@ -46,7 +46,7 @@ export class ApiService {
     // handle error
     if (userDetails) {
       return this.http.put<Users>(this.API_URL + this.USER_DETAIL + userDetails.userId, (userDetails))
-        .pipe(catchError(this.handleError));
+        .pipe(map(this.checkResponse), catchError(this.handleError));
     }
   }
 

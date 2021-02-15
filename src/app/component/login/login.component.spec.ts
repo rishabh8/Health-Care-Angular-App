@@ -36,7 +36,7 @@ const mockRoutes = [
   }
 ];
 
-describe('LoginComponent', () => {
+fdescribe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let dataService: DataService;

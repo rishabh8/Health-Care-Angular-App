@@ -52,7 +52,7 @@ describe('ProfileComponent', () => {
         ProfileComponent,
         MockComponent
       ],
-      schemas:[CUSTOM_ELEMENTS_SCHEMA],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA],
       imports: [
         RouterTestingModule,
         FormsModule,

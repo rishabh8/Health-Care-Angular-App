@@ -1,5 +1,6 @@
-import { Component, OnInit, NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, OnInit, NO_ERRORS_SCHEMA, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { Users } from '../../models/users.model';
 import { DataService } from '../../services/data.service';
@@ -52,7 +53,7 @@ export class ProfileComponent implements OnInit {
     this.userDetails.mobile = this.editProfileForm.value.mobile;
     this.userDetails.email = this.editProfileForm.value.email;
     this.userDetails.location = this.editProfileForm.value.location;
-    this.dataService.updateProfile(this.userDetails).subscribe(data => {
+    return this.dataService.updateProfile(this.userDetails).subscribe(data => {
       if (data) {
         this.editProfile = false;
       } else {
@@ -76,7 +77,7 @@ export class ProfileComponent implements OnInit {
   getProfileDetails() {
 
     // retrieve user details from service using userId
-    this.dataService.getUserDetails(this.userId).subscribe(data => {
+    return this.dataService.getUserDetails(this.userId).subscribe(data => {
       if (data) {
         this.userDetails = data;
       }

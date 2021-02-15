@@ -27,14 +27,20 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromeHeadless'],
+    browsers: ['Chrome'],
+    customLaunchers: {
+      ChromeDebugging: {
+        base: 'Chrome',
+        flags: [ '--remote-debugging-port=9876' ]
+      }
+    },
     // browsers: ['FirefoxHeadless'],
-    singleRun: false,
+    singleRun: true,
     restartOnFileChange: true,
     junitReporter: {
       useBrowserName: false,
       outputFile : 'unit.xml',
       suite: 'unit'
-    }    
+    }
   });
 };
