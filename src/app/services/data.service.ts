@@ -6,7 +6,7 @@ import { Users } from '../models/users.model';
 import { Patient } from '../models/patient';
 import { Appointment } from '../models/appointment';
 import { ApiService } from './api.service';
-import { map, tap } from 'rxjs/operators';
+import { map, mapTo } from 'rxjs/operators';
 
 @Injectable()
 export class DataService {
@@ -26,15 +26,15 @@ export class DataService {
     // return true if user authenticated
 
     // return false if user not authenticated
-    this.api.checkLogin(username, password).subscribe(response => {
-      if (response.userId !== null && response.userId !== undefined) {
-        localStorage.setItem('userId', response.userId.toString());
-        this.isLoggedIn = true;
-        this.isLogIn.next(response.userId > 0 ? true : false);
-      } else {
-        localStorage.removeItem('userId');
-      }
-    });
+    if (username != null && username !== undefined && password != null && password !== undefined) {
+      this.api.checkLogin(username, password).subscribe(response => {
+        if (response.userId > 0) {
+          localStorage.setItem('userId', response.userId.toString());
+          this.isLoggedIn = true;
+          this.isLogIn.next(this.isLoggedIn);
+        }
+      });
+    }
     return this.isLogIn;
   }
 
@@ -53,19 +53,17 @@ export class DataService {
   getUserDetails(userId: number): Observable<Users> {
 
     // should return user details retrieved from api service
-    return this.api.getUserDetails(userId).pipe(map(res => res));
+    if (userId > -1) {
+      return this.api.getUserDetails(userId).pipe(map(res => res));
+    }
   }
 
   updateProfile(userDetails): Observable<boolean> {
 
     // should return the updated status according to the response from api service
-    if (userDetails) {
+    if (userDetails != null && userDetails !== undefined) {
       this.api.updateDetails(userDetails).subscribe(data => {
-        if (data) {
-          this.updateStatus.next(true);
-        } else {
-          this.updateStatus.next(false);
-        }
+        return data ? this.updateStatus.next(true) : this.updateStatus.next(false);
       });
     }
     return this.updateStatus;

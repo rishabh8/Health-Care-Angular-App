@@ -51,15 +51,17 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       const username = this.loginForm.value.userName;
       const password = this.loginForm.value.password;
-      return this.dataService.authenticateUser(username, password).subscribe(response => {
-        if (response != null && response !== undefined) {
-          this.route.navigate(['profile']);
-          this.isLoggedIn = true;
-        } else {
-          this.isLoggedIn = false;
-          this.loginForm.reset();
-        }
-      });
+      if (username != null && username !== undefined && password != null && password !== undefined) {
+        this.dataService.authenticateUser(username, password).subscribe(response => {
+          if (response) {
+            this.route.navigate(['profile']);
+            this.isLoggedIn = true;
+          } else {
+            this.isLoggedIn = false;
+            this.loginForm.reset();
+          }
+        });
+      }
     }
   }
 

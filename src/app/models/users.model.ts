@@ -4,5 +4,9 @@ export class Users {
   mobile: string;
   email: string;
   location: string;
+
+  constructor(values: object = {}) {
+    Object.assign(this, values);
+  }
 }
 

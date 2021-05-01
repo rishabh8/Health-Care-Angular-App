@@ -36,11 +36,11 @@ export class ProfileComponent implements OnInit {
       email: new FormControl('', Validators.compose([Validators.required, Validators.email])),
       location: new FormControl('', Validators.compose([Validators.required]))
     });
-    if (this.dataService.getAuthStatus()) {
-      this.userId = this.dataService.getUserId();
-      this.getProfileDetails();
-      this.editProfile = false;
-    }
+    // if (this.dataService.getAuthStatus()) {
+    this.userId = this.dataService.getUserId();
+    this.getProfileDetails();
+    this.editProfile = false;
+    // }
     // get login status from service
     // get userId from service and assign it to userId property
     // get profile details and display it
@@ -53,7 +53,7 @@ export class ProfileComponent implements OnInit {
     this.userDetails.mobile = this.editProfileForm.value.mobile;
     this.userDetails.email = this.editProfileForm.value.email;
     this.userDetails.location = this.editProfileForm.value.location;
-    return this.dataService.updateProfile(this.userDetails).subscribe(data => {
+    this.dataService.updateProfile(this.userDetails).subscribe(data => {
       if (data) {
         this.editProfile = false;
       } else {
@@ -77,11 +77,13 @@ export class ProfileComponent implements OnInit {
   getProfileDetails() {
 
     // retrieve user details from service using userId
-    return this.dataService.getUserDetails(this.userId).subscribe(data => {
-      if (data) {
-        this.userDetails = data;
-      }
-    });
+    if (this.userId > -1) {
+      this.dataService.getUserDetails(this.userId).subscribe(data => {
+        if (data) {
+          this.userDetails = data;
+        }
+      });
+    }
   }
 
 }
