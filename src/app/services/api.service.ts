@@ -7,11 +7,12 @@ import { Users } from '../models/users.model';
 import { Patient } from '../models/patient';
 import { Appointment } from '../models/appointment';
 import { take } from 'rxjs/operators';
-import { catchError, retry } from 'rxjs/operators';
-import { unsupported } from '@angular/compiler/src/render3/view/util';
+import { catchError } from 'rxjs/operators';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ApiService {
 
   private API_URL: string;
@@ -25,14 +26,8 @@ export class ApiService {
   public checkLogin(username: string, password: string): Observable<Credentials> {
     // should return response from server
     // handle error
-    // const payload: Credentials = {
-    //   userId: 0,
-    //   username,
-    //   password,
-    //   isLoggedIn : true
-    // };
     return this.http.post<Credentials>(this.API_URL + this.AUTH_API_URL, new Credentials({ username, password }))
-      .pipe(take(1), catchError(this.handleError));
+      .pipe(catchError(this.handleError));
   }
 
   public checkResponse(res: any) {

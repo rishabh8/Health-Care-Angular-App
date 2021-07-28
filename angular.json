@@ -124,5 +124,8 @@
       }
     }
   },
-  "defaultProject": "hcs-v9"
+  "defaultProject": "hcs-v9",
+  "cli": {
+    "analytics": false
+  }
 }
